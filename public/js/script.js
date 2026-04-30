@@ -1,25 +1,19 @@
-</div><!-- /container -->
-
-<footer>
-    <i class="fas fa-paw me-2"></i>
-    VétoCare &copy; <?= date('Y') ?> · <strong>Mentions légales</strong> · <strong>Contact</strong>
-</footer>
-
-<script>
 function validerMotDePasse() {
     const mdp = document.getElementById('mot_de_passe');
     const confirm = document.getElementById('confirm_mdp');
     if (mdp && confirm) {
-        mdp.value !== confirm.value
-            ? confirm.setCustomValidity('Les mots de passe ne correspondent pas !')
-            : confirm.setCustomValidity('');
+        if (mdp.value !== confirm.value) {
+            confirm.setCustomValidity('Les mots de passe ne correspondent pas !');
+        } else {
+            confirm.setCustomValidity('');
+        }
     }
 }
 
 function aperçuPhoto(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = function(e) {
             const apercu = document.getElementById('apercu_photo');
             if (apercu) {
                 apercu.src = e.target.result;
@@ -31,8 +25,9 @@ function aperçuPhoto(input) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.alert').forEach(alert => {
-        setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function (alert) {
+        setTimeout(function () {
             alert.style.transition = 'opacity 0.5s';
             alert.style.opacity = '0';
             setTimeout(() => alert.remove(), 500);
@@ -43,7 +38,3 @@ document.addEventListener('DOMContentLoaded', function () {
 function confirmerSuppression(message) {
     return confirm(message || 'Voulez-vous vraiment supprimer cet élément ?');
 }
-</script>
-
-</body>
-</html>
