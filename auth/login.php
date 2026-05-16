@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($mdp)) {
         $erreur = "Veuillez remplir tous les champs.";
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe, role FROM utilisateurs WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Redirection selon le rôle
             if ($user['role'] === 'admin') {
-                header('Location: /Veterinaire/admin/index.php');
+               header('Location: http://localhost/Veterinaire/admin/index.php');
             } else {
-                header('Location: /Veterinaire/user/dashboard.php');
+                header('Location: http://localhost/Veterinaire/user/dashboard.php');
             }
             exit;
         } else {

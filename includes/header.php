@@ -3,11 +3,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<?php
-if (session_status() === PHP_SESSION_NONE) session_start();
-?>
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +10,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/Veterinaire/public/css/style.css">
-    <!-- Bootstrap JS ici pour éviter les problèmes de chargement -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -48,35 +42,69 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 <i class="fas fa-th-large me-1"></i>Dashboard
               </a>
             </li>
+
           <?php else: ?>
+
+            <?php
+            $nb_panier_header = 0;
+            if (!empty($_SESSION['panier'])) {
+                foreach ($_SESSION['panier'] as $item) {
+                    if (is_array($item) && isset($item['quantite'])) {
+                        $nb_panier_header += $item['quantite'];
+                    } elseif (is_numeric($item)) {
+                        $nb_panier_header += $item;
+                    }
+                }
+            }
+            ?>
+
             <li class="nav-item">
               <a class="nav-link" href="/Veterinaire/user/dashboard.php">Mon espace</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="/Veterinaire/user/animaux.php">
-                Mes animaux
+              <a class="nav-link" href="/Veterinaire/user/produits.php">
+                <i class="fas fa-store me-1"></i> Produits
               </a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="/Veterinaire/user/rendez-vous.php">
-                Rendez-vous
+              <a class="nav-link" href="/Veterinaire/user/animaux.php">Mes animaux</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/Veterinaire/user/rendez-vous.php">Rendez-vous</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/Veterinaire/user/commandes.php">Commandes</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/Veterinaire/user/panier.php">
+                <i class="fas fa-shopping-cart me-1"></i> Panier
+                <?php if ($nb_panier_header > 0): ?>
+                  <span style="background:#e63946;color:white;border-radius:50%;
+                               padding:1px 6px;font-size:0.75rem;margin-left:2px;font-weight:700;">
+                    <?= $nb_panier_header ?>
+                  </span>
+                <?php endif; ?>
               </a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="/Veterinaire/user/commandes.php">
-                Commandes
+              <a class="nav-link" href="/Veterinaire/user/profil.php">
+                <i class="fas fa-user-circle me-1"></i> Mon profil
               </a>
             </li>
+
           <?php endif; ?>
 
           <li class="nav-item ms-2">
             <a class="nav-link nav-user" href="/Veterinaire/auth/logout.php">
-              <i class="fas fa-circle" 
-                 style="font-size:0.5rem;color:var(--green-light)"></i>
+              <i class="fas fa-circle" style="font-size:0.5rem;color:var(--green-light)"></i>
               <?= htmlspecialchars($_SESSION['user_nom']) ?>
-              <span style="font-size:0.75rem;color:var(--gray-400)">
-                · Déconnexion
-              </span>
+              <span style="font-size:0.75rem;color:var(--gray-400)"> · Déconnexion</span>
             </a>
           </li>
 
@@ -85,9 +113,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             <a class="nav-link" href="/Veterinaire/auth/login.php">Connexion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-btn" href="/Veterinaire/auth/register.php">
-              Créer un compte
-            </a>
+            <a class="nav-link nav-btn" href="/Veterinaire/auth/register.php">Créer un compte</a>
           </li>
         <?php endif; ?>
 
