@@ -1,11 +1,11 @@
 <?php
-require_once '../includes/header.php';
+session_start();
 require_once '../config/db.php';
 
 $erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
+    $email = ($_POST['email']);
     $mdp   = $_POST['mot_de_passe'];
 
     if (empty($email) || empty($mdp)) {
@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+require_once '../includes/header.php';
 ?>
 
 <style>

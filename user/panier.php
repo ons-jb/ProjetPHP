@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/header.php';
+session_start();
 require_once '../config/db.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -93,6 +93,8 @@ $total = 0;
 foreach ($_SESSION['panier'] as $item) {
     $total += $item['prix'] * $item['quantite'];
 }
+require_once '../includes/header.php';
+
 ?>
 
 <div class="page-header d-flex justify-content-between align-items-center">

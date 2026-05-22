@@ -40,7 +40,13 @@ if (isset($_GET['ajouter'])) {
 // ── Filtrage par catégorie ───────────────────────────────────────────────────
 $categorie_id = isset($_GET['categorie']) ? (int)$_GET['categorie'] : 0;
 
-$categories = $pdo->query("SELECT * FROM categories ORDER BY nom")->fetchAll();
+$categories = $pdo->query("
+    SELECT DISTINCT c.*
+    FROM categories c
+    INNER JOIN produits p ON p.categories_id = c.id
+    WHERE p.stock > 0
+    ORDER BY c.nom
+")->fetchAll();
 
 if ($categorie_id > 0) {
    $stmt = $pdo->prepare("SELECT p.*, c.nom as categorie_nom 

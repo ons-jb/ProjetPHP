@@ -1,6 +1,5 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-require_once '../includes/header.php';
 require_once '../config/db.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
@@ -67,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+require_once '../includes/header.php';
 ?>
 
 <div class="row justify-content-center">

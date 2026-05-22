@@ -156,7 +156,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 }
             }
             ?>
-
+            
             <li class="nav-item">
               <a class="nav-link" href="/Veterinaire/user/dashboard.php">Mon espace</a>
             </li>
